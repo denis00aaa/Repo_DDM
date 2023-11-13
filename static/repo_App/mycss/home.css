@@ -1,0 +1,16 @@
+.find-list{
+    width: 200px;
+    height: 350px;
+    border: solid green 1px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.ul-content{
+    padding: 0;
+}
+.li-content{
+    list-style: none;
+}
+.a-item{
+    text-decoration: none;
+}

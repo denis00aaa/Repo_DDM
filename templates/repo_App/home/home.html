@@ -1,0 +1,159 @@
+{% extends 'repo_App/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'repo_App/mycss/home.css' %}">
+{% endblock %}
+{% block main %}
+
+    <div class="welcome d-flex justify-content-center">
+        <h4>Repositorio Digital Inicio</h4>
+    </div>
+
+    <div class="line bg-success"></div>
+
+    <div class="row mt-3">
+        <div class="d-flex flex-wrap col-8 gap-2">
+            <h5 class="w-100">Buscar por:</h5>
+            <div class="finde-content">
+                <div class="d-flex justify-content-center">Autor</div>
+                <div class="find-list">
+                    <ul id="authors-list" class="ul-content"></ul>
+                    <div id="authors-pagination">
+                        <a class="link-success" id="previous-link-author" href="#" style="display: none;">Anterior</a>
+                        <a class="link-success" id="next-link-author" href="#" style="display: none;">Siguiente</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="finde-content">
+                <div class="d-flex justify-content-center">Tematica</div>
+                <div class="find-list flex-column">
+                    <ul id="themes-list" class="ul-content"></ul>
+                    <div id="themes-pagination">
+                        <a class="link-success" id="previous-link-theme" href="#" style="display: none;">Anterior</a>
+                        <a class="link-success" id="next-link-theme" href="#" style="display: none;">Siguiente</a>
+                    </div>
+                </div>
+            </div>
+            <div class="finde-content">
+                <div class="d-flex justify-content-center">Fecha</div>
+                <div class="find-list flex-column">
+                    <ul class="ul-content">
+                        <li class="li-content"><a class="link-success a-item" href="">Cualquier cosa por ahora</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex col-4 justify-content-center">
+            <h5 class="w-100">Temas de Interes:</h5>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            function loadAuthors(author_page) {
+
+                $.ajax({
+                    url: '/get_authors/',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {'page': author_page},
+                    success: function (response) {
+
+                        $('#authors-list').empty();
+
+                        $.each(response.authors, function (index, author) {
+                            $('#authors-list').append('<li class="page-item li-content">' +
+                                '<a class="link-success a-item" href="#">' + author.name + '</a>' +
+                                '</li>');
+                        });
+
+                        updateAuthorPagination(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+            function updateAuthorPagination(response) {
+
+                var previousLink = $('#previous-link-author');
+                var nextLink = $('#next-link-author');
+
+                if (response.has_previous) {
+                    previousLink.attr('href', '?page=' + response.previous_page_number);
+                    previousLink.show();
+                } else {
+                    previousLink.hide();
+                }
+
+                if (response.has_next) {
+                    nextLink.attr('href', '?page=' + response.next_page_number);
+                    nextLink.show();
+                } else {
+                    nextLink.hide();
+                }
+            }
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentPage = urlParams.get('page');
+
+            loadAuthors(currentPage);
+        });
+        $(document).ready(function () {
+            function loadThemes(theme_page) {
+
+                $.ajax({
+                    url: '/get_themes/',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {'page': theme_page},
+                    success: function (response) {
+
+                        $('#themes-list').empty();
+
+                        $.each(response.themes, function (index, theme) {
+                            $('#themes-list').append('<li class="page-item li-content">' +
+                                '<a class="link-success a-item" href="#">' + theme.name + '</a>' +
+                                '</li>');
+                        });
+
+                        updateThemePagination(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+            function updateThemePagination(response) {
+
+                var previousLink = $('#previous-link-theme');
+                var nextLink = $('#next-link-theme');
+
+                if (response.has_previous) {
+                    previousLink.attr('href', '?page=' + response.previous_page_number);
+                    previousLink.show();
+                } else {
+                    previousLink.hide();
+                }
+
+                if (response.has_next) {
+                    nextLink.attr('href', '?page=' + response.next_page_number);
+                    nextLink.show();
+                } else {
+                    nextLink.hide();
+                }
+            }
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentPage = urlParams.get('page');
+
+            loadThemes(currentPage);
+        });
+    </script>
+{% endblock %}

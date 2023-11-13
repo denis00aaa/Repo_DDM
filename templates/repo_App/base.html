@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'repo_App/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'repo_App/mycss/base.css' %}">
+    {% block styles %}
+
+    {% endblock %}
+
+    {% block title %}
+    	<title>Repositorio DEM - Inicio</title>
+    {% endblock %}
+
+</head>
+<body>
+<header class="header-content position-fixed w-100 shadow-sm ">
+     {% block header %}
+        {% include 'repo_App/shared/header.html' %}
+    {% endblock %}
+
+
+    {% block  navigation %}
+    	{% include 'repo_App/shared/navigation.html' %}
+    {% endblock %}
+</header>
+
+<section class="main-content d-flex justify-content-center w-100">
+    <div class="container bg-light shadow-sm p-4">
+        {% block main %}
+
+        {% endblock %}
+    </div>
+
+</section>
+
+<footer class="position-fixed bottom-0 bg-dark w-100 d-flex justify-content-center align-items-center">
+    <div>
+        <p style="color: white; margin: 10px">Universidad de Ciencias Informaticas</p>
+    </div>
+</footer>
+
+<script src="{% static 'repo_App/js/jquery.js' %}"></script>
+<script src="{% static 'repo_App/js/bootstrap.min.js' %}"></script>
+
+{% block script %}
+
+{% endblock %}
+
+</script>
+</body>
+</html>

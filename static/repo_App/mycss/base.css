@@ -1,0 +1,28 @@
+.header-content{
+    z-index: 10;
+}
+.header-top{
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-content{
+    width: 200px;
+}
+
+.user-content{
+    width: 200px;
+    color: white;
+}
+
+.main-content{
+    position: absolute;
+    top: 130px;
+}
+.line{
+    height: 2px;
+    border-radius: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
